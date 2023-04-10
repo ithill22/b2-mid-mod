@@ -1,0 +1,11 @@
+<h1>Departments</h1>
+<% @departments.each do |department| %>
+<ul>
+  <li><h2><%= link_to department.name, "/departments/#{department.id}" %></h2>
+      <p><%= "Floor: #{department.floor}" %></p></li>
+      <h3>Employees</h3>
+      <% department.employees.each do |employee| %>
+      <li><%= employee.name %></li>
+      <% end %>
+</ul>
+<% end %>
