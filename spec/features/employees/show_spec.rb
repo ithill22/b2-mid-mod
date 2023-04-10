@@ -10,6 +10,7 @@ RSpec.describe 'Employee Show Page' do
     @ticket_2 = Ticket.create!(subject: 'Computer not working', age: 2)
     @ticket_3 = Ticket.create!(subject: 'Complaint', age: 3)
     @ticket_4 = Ticket.create!(subject: 'Need new pencils', age: 1)
+    @ticket_5 = Ticket.create!(subject: 'Need new pens', age: 2)
     
     EmployeeTicket.create!(employee_id: @employee_1.id, ticket_id: @ticket_1.id)
     EmployeeTicket.create!(employee_id: @employee_2.id, ticket_id: @ticket_2.id)
@@ -24,10 +25,26 @@ RSpec.describe 'Employee Show Page' do
       expect(page).to have_content(@employee_1.name)
       expect(page).to have_content(@employee_1.department.name)
       expect(@ticket_3.subject).to appear_before(@ticket_1.subject)
+      expect(page).to_not have_content(@ticket_2.subject)
 
       within "#oldest-ticket" do
         expect(page).to have_content(@ticket_3.subject)
       end
+    end
+
+    it 'I see a form to add a ticket to this employee' do
+      visit "/employees/#{@employee_1.id}"
+
+      expect(page).to_not have_content(@ticket_5.subject)
+      expect(page).to have_content('Add New Ticket')
+      expect(page).to have_field(:ticket_id)
+      expect(page).to have_button('Submit')
+
+      fill_in :ticket_id, with: @ticket_5.id
+      click_button 'Submit'
+     
+      expect(current_path).to eq("/employees/#{@employee_1.id}")
+      expect(page).to have_content(@ticket_5.subject)
     end
   end
 end

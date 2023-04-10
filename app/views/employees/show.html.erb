@@ -13,3 +13,12 @@
 <section id="oldest-ticket">
   <%= "Oldest Ticket: #{ @employee.oldest_ticket }" %>
 </section>
+<br>
+<section id="add-new-ticket">
+<h2>Add New Ticket</h2>
+<%= form_with model: @ticket, url: "/employees/#{@employee.id}", method: :post, local: true do |f| %>
+<%= f.label :ticket_id, "Ticket ID:" %>
+<%= f.text_field :ticket_id %>
+<%= f.submit "Submit" %>
+<% end %>
+</section>
