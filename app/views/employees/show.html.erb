@@ -1,0 +1,15 @@
+<h1><%= @employee.name %></h1>
+<p><%= "Department: #{@employee.department.name}" %></p>
+<section id="employee-tickets">
+<h2> Tickets </h2>
+<ul>
+    <% @employee.tickets_by_age.each do |ticket| %>
+      <li><%= "Subject: #{ticket.subject}" %>
+      <%= "Age: #{ticket.age}" %></li>
+    <% end %>
+</ul>
+</section>
+<br>
+<section id="oldest-ticket">
+  <%= "Oldest Ticket: #{ @employee.oldest_ticket }" %>
+</section>
